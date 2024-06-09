@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Manage Flashcards</title>
+  <style>
+    body { font-family: Arial, sans-serif; }
+    .flashcard { margin: 10px 0; }
+    #message { margin-top: 10px; color: green; }
+  </style>
+</head>
+<body>
+  <h1>Manage Flashcards</h1>
+  <form id="addVocabForm">
+    <input type="text" id="word" placeholder="Word" required />
+    <input type="text" id="definition" placeholder="Definition" required />
+    <button type="submit">Add</button>
+  </form>
+  <div id="message"></div>
+  <button class="ui button" id="manageButton">Manage Vocabulary List</button>
+
+  <script src="../libs/papaparse.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>

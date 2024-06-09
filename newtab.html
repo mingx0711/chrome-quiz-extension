@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Vocabulary of the Day</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; text-align: center; }
+    .flashcard { margin: 10px 0; padding: 20px; border: 1px solid #ccc; border-radius: 4px; display: inline-block; }
+    #snoozeButton, #nextButton { margin-top: 10px; margin-left: 5px; }
+    .quiz-container, .true-false-container { display: none; }
+    .quiz-option { margin-top: 10px; display: block; width: 100%; }
+    #correctMessage, #incorrectMessage { display: none; font-weight: bold; }
+    #correctMessage { color: green; }
+    #incorrectMessage { color: red; }
+    #nextAfterIncorrectButton { display: none; margin-top: 10px; }
+  </style>
+</head>
+<body>
+  <h1>Vocabulary of the Day</h1>
+  <div id="vocabFlashcard" class="flashcard"></div>
+  <div class="quiz-container" id="quizContainer">
+    <p id="quizQuestion"></p>
+    <button class="quiz-option" id="option1"></button>
+    <button class="quiz-option" id="option2"></button>
+    <button class="quiz-option" id="option3"></button>
+    <button class="quiz-option" id="option4"></button>
+  </div>
+  <div class="true-false-container" id="trueFalseContainer">
+    <p id="trueFalseQuestion"></p>
+    <button id="trueButton">True</button>
+    <button id="falseButton">False</button>
+  </div>
+  <p id="correctMessage">Correct!</p>
+  <p id="incorrectMessage">Incorrect! The correct definition is:</p>
+  <div id="correctDefinition" class="flashcard"></div>
+  <button id="snoozeButton">Snooze</button>
+  <button id="nextButton">Next</button>
+  <button id="nextAfterIncorrectButton">Next</button>
+
+  <script src="../libs/papaparse.min.js"></script>
+  <script src="newtab.js"></script>
+</body>
+</html>

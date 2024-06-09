@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8"> 
+  <title>Manage Vocabulary List</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; }
+    .flashcard { margin: 10px 0; padding: 10px; border: 1px solid #ccc; border-radius: 4px; display: flex; justify-content: space-between; align-items: center; }
+    .flashcard button { margin-left: 10px; }
+    #clearButton { margin-top: 20px; }
+  </style>
+</head>
+<body>
+  <h1>Manage Vocabulary List</h1>
+  <button id="startTestButton"> Test your weak vocabs! </button>
+  <form id="addVocabForm">
+    <input type="text" id="word" placeholder="Word" required />
+    <input type="text" id="definition" placeholder="Definition" required />
+    <button type="submit">Add</button>
+  </form>
+  <div class="container" style =" display: flex;">
+    <div  class="box" style = "width: 420px" text-align = "left"> Word </div>
+    <div  class="box" style = "width: 420px"  text-align = "left"> Definition </div>
+    <div  class="box"  style = "width: 100px" text-align = "left"> Last 4 quiz results </div>
+  </div>
+  <div id="vocabList"></div>
+  <button id="clearButton">Clear Data</button>
+
+  <script src="../libs/papaparse.js"></script>
+  <script src="manageVocab.js"></script>
+</body>
+</html>
