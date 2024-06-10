@@ -7,18 +7,28 @@
     .flashcard { margin: 10px 0; }
     #message { margin-top: 10px; color: green; }
   </style>
+  <link rel="stylesheet" href="../libs/semantic.css">
 </head>
 <body>
-  <h1>Manage Flashcards</h1>
-  <form id="addVocabForm">
-    <input type="text" id="word" placeholder="Word" required />
-    <input type="text" id="definition" placeholder="Definition" required />
-    <button type="submit">Add</button>
-  </form>
-  <div id="message"></div>
-  <button class="ui button" id="manageButton">Manage Vocabulary List</button>
+  <div class = "ui center aligned basic segment">
+    <div class="ui message">
+      <h1 class = "ui header">Manage Flashcards</h1>
+    </div>
+  </div>
+  <form class = "ui center aligned basic segment" id="addVocabForm">
+    <div class="ui input"> 
+      <input type="text" id="word" placeholder="Word" required />
+    </div>
+    <div class="ui input"> 
+      <input type="text" id="definition" placeholder="Definition" required />
+    </div>
 
-  <script src="../libs/papaparse.js"></script>
+    <button style = "display: Block;margin-left: auto;margin-right: auto;" class = "ui button" type="submit">Add</button>
+  </form>
+  <div class = "ui container" id="message"></div>
+  <button style = "display: Block;margin-left: auto;margin-right: auto;"class="ui button" id="manageButton">Manage Vocabulary List</button>
+
+  <script src="../libs/semantic.css"></script>
   <script src="popup.js"></script>
 </body>
 </html>

@@ -13,27 +13,33 @@
     #incorrectMessage { color: red; }
     #nextAfterIncorrectButton { display: none; margin-top: 10px; }
   </style>
+  <link rel="stylesheet" href="../libs/semantic.css">
 </head>
 <body>
   <h1>Test Flashcards</h1>
-  <div id="vocabFlashcard" class="flashcard"></div>
-  <div class="quiz-container" id="quizContainer">
-    <p id="quizQuestion"></p>
-    <button class="quiz-option" id="option1"></button>
-    <button class="quiz-option" id="option2"></button>
-    <button class="quiz-option" id="option3"></button>
-    <button class="quiz-option" id="option4"></button>
+  <div id="vocabFlashcard" class="flashcard" style = "background-color:#ebebe9;margin: auto ;">
+    <div style = "font-size: 60px;color:#272623;" id="wordDiv"></div>
+    <div class="ui horizontal divider" style = "color:#545150; height: 5px" ></div>
+    <div style = "font-size: 60px; color:#494845;" id="defDiv"></div>
   </div>
-  <div class="true-false-container" id="trueFalseContainer">
-    <p id="trueFalseQuestion"></p>
-    <button id="trueButton">True</button>
-    <button id="falseButton">False</button>
+  <div class="quiz-container" style="top: 2%;margin: auto ;" id="quizContainer">
+    <p style="font-size: 350%;" id="quizQuestion"></p>
+    <button style="font-size: 270%;margin: auto ;margin-top: 10px; border: 10px; border-color: #607059;" class="ui quiz-option" id="option1"></button>
+    <button style="font-size: 270%;margin: auto ;margin-top: 10px;border: 10px; border-color: #607059;" class="ui quiz-option" id="option2"></button>
+    <button style="font-size: 270%;margin: auto ;margin-top: 10px;border: 10px; border-color: #607059;" class="ui quiz-option" id="option3"></button>
+    <button style="font-size: 270%;margin: auto ;margin-top: 10px;border: 10px; border-color: #607059;" class="ui quiz-option" id="option4"></button>
   </div>
-  <p id="correctMessage">Correct!</p>
-  <p id="incorrectMessage">Incorrect! The correct definition is:</p>
-  <div id="correctDefinition" class="flashcard"></div>
-  <button id="nextButton">Next</button>
-  <button id="nextAfterIncorrectButton">Next</button>
+  <div class="true-false-container"  style="top: 2%;margin: auto ;" id="trueFalseContainer">
+    <p style="font-size: 350%;"id="trueFalseQuestion"></p>
+    <button style="font-size: 270%;margin: auto ;margin-top: 30px;border: 10px; border-color: #607059;" class="ui button" id="trueButton">True</button>
+    <button style="font-size: 270%;margin: auto ;margin-top: 30px;border: 10px; border-color: #607059;" class="ui button" id="falseButton">False</button>
+  </div>
+  <p class = "ui message" id="correctMessage" style="margin: auto ;width: 300px; margin-top: 10px ; font-size:50px; text-align: center;">Correct!</p>
+  <p class = "ui message" id="incorrectMessage" style=" text-align: center;">Incorrect! The correct definition is:</p>
+  <div id="correctDefinition" class="ui flashcard" style = "background-color:#ebebe9;height:200px; font-size: 200% ;margin: auto ;"></div>
+  <button class = "ui button"id="snoozeButton">Snooze</button>
+  <button class = "ui button"id="nextButton">Next</button>
+  <button class = "ui button" id="nextAfterIncorrectButton" style="position: relative ; left:50% ; margin-top: 50px">Next</button>
 
   <script src="test.js"></script>
 </body>

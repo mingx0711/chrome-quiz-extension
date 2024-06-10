@@ -9,7 +9,7 @@ document.getElementById('addVocabForm').addEventListener('submit', function(e) {
     let vocabList = data.vocabList || [];
 
     // Append the new word, definition, and snoozed field
-    vocabList.push({ word, definition, snoozed: false , seen: 0, quizResults: []});
+    vocabList.push({ word, definition, snoozed: false , seen: 0, quizResults: ['n','n','n','n']});
     // Save updated vocab list to Chrome storage
     chrome.storage.local.set({ vocabList: vocabList }, function() {
       // Show a message indicating the word was added

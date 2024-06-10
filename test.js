@@ -48,29 +48,40 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 function showNextItem() {
-  console.log("filtering")
-  filteredVocabList = vocabList.filter(vocab => {
-    const results = vocab.quizResults || [];
-    return results.filter(result => result === 'f').length > 2;
-  });
-  console.log(filteredVocabList)
-  if (filteredVocabList.length === 0) {
+  document.getElementById('snoozeButton').style.display = 'none';
+  document.getElementById('nextButton').style.display = 'none';
+  document.getElementById('quizContainer').style.display = 'none';
+  document.getElementById('trueFalseContainer').style.display = 'none';
+  console.log("vocabList");
+
+  if(vocabList.length<4){
+    console.log("novocab1");
     document.getElementById('vocabFlashcard').textContent = "No vocabulary to test.";
-    document.getElementById('nextButton').style.display = 'none';
-    return;
-  }
-  const quizStyle = Math.floor(Math.random() * 3);
-  console.log(quizStyle);
-  switch(quizStyle){
-    case 0:
-      quizStyle1();
-      break;
-    case 1:
-      quizStyle2();
-      break;
-    case 2:
-      quizStyle3();
-      break;
+  }else{
+    console.log("filtering")
+    filteredVocabList = vocabList.filter(vocab => {
+      const results = vocab.quizResults || [];
+      return results.filter(result => result === 'f').length > 1;
+    });
+    console.log(filteredVocabList)
+    if (filteredVocabList.length === 0) {
+      document.getElementById('vocabFlashcard').textContent = "No vocabulary to test.";
+      document.getElementById('nextButton').style.display = 'none';
+      return;
+    }
+    const quizStyle = Math.floor(Math.random() * 3);
+    console.log(quizStyle);
+    switch(quizStyle){
+      case 0:
+        quizStyle1();
+        break;
+      case 1:
+        quizStyle2();
+        break;
+      case 2:
+        quizStyle3();
+        break;
+    }
   }
 }
 
@@ -202,65 +213,76 @@ function quizStyle1() {
     const correctMessage = document.getElementById('correctMessage');
     const incorrectMessage = document.getElementById('incorrectMessage');
     const correctDefinition = document.getElementById('correctDefinition');
-  
     const result = button.textContent === correctAnswer ? 't' : 'f';
+    updateQuizResults(result);
   
-    if (result === 't') {
+    if (button.textContent === correctAnswer) {
+      button.classList.add('correct');
       correctMessage.style.display = 'block';
       setTimeout(() => {
+        button.classList.remove('correct');
         correctMessage.style.display = 'none';
         showNextItem();
-      }, 3000);
+      }, 2000);
     } else {
       incorrectMessage.style.display = 'block';
       showCorrectAnswer();
-      document.getElementById('nextAfterIncorrectButton').style.display = 'block';
-    }
-  }
-  
-  function checkTrueFalse(isTrue) {
-    const result = isTrue === isPairCorrect ? 't' : 'f';
-    processTrueFalseResult(result);
-  }
-  
-  function processTrueFalseResult(result) {
-  
-    const correctMessage = document.getElementById('correctMessage');
-    const incorrectMessage = document.getElementById('incorrectMessage');
-    const correctDefinition = document.getElementById('correctDefinition');
-  
-    if (result === 't') {
-      correctMessage.style.display = 'block';
-      setTimeout(() => {
-        correctMessage.style.display = 'none';
-        showNextItem();
-      }, 3000);
-    } else {
-      incorrectMessage.style.display = 'block';
-      showCorrectAnswer();
-      document.getElementById('nextAfterIncorrectButton').style.display = 'block';
+      document.getElementById('nextAfterIncorrectButton').style.display = 'Block';
     }
   }
   
   function showCorrectAnswer() {
-    const correctDefinition = document.getElementById('correctDefinition');
-    correctDefinition.style.display = "Block";
-    if (quizType === 'definition') {
-      correctDefinition.textContent = `${currentQuizWord}: ${currentQuizDefinition}`;
-    } else if (quizType === 'word') {
-      correctDefinition.textContent = `${currentQuizDefinition}: ${currentQuizWord}`;
-    } else {
-      correctDefinition.textContent = `The correct definition of "${currentQuizWord}" is "${filteredVocabList.find(entry => entry.word === currentQuizWord).definition}"`;
+    const vocabFlashcard = document.getElementById('correctDefinition');
+    vocabFlashcard.style.display = 'block';
+    const correctVocab = vocabList.find(entry => entry.word === currentQuizWord);
+    if (correctVocab) {
+      vocabFlashcard.textContent = `${correctVocab.word}: ${correctVocab.definition}`;
+      document.getElementById('quizContainer').style.display = 'none';
+      vocabFlashcard.style.display = 'block';
     }
-    document.getElementById('quizContainer').style.display = 'none';
-    document.getElementById('trueFalseContainer').style.display = 'none';
-    correctDefinition.style.display = 'block';
   }
+  function checkTrueFalse(isTrue) {
+    const correctMessage = document.getElementById('correctMessage');
+    const incorrectMessage = document.getElementById('incorrectMessage');
+    const correctDefinition = document.getElementById('correctDefinition');
+   
+    if (isTrue === isPairCorrect) {
+      
+      updateQuizResults('t');
+      correctMessage.style.display = 'block';
+      setTimeout(() => {
+        correctMessage.style.display = 'none';
+        showNextItem();
+      }, 3000);
+    } else {
+      updateQuizResults('f');
   
+      incorrectMessage.style.display = 'block';
+      showCorrectAnswer();
+      document.getElementById('nextAfterIncorrectButton').style.display = 'block';
+  
+    }
+    document.getElementById('trueFalseContainer').style.display = 'none';
+  
+  }
   function shuffleArray(array) {
     for (let i = array.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
       [array[i], array[j]] = [array[j], array[i]];
+    }
+  }
+  function updateQuizResults(result) {
+    if (currentVocabIndex !== null && vocabList[currentVocabIndex].quizResults) {
+      let quizResults =  vocabList[currentVocabIndex].quizResults;
+      quizResults.unshift(result);
+      if (quizResults.length > 4) {
+        quizResults.pop(); // Remove the oldest result to keep only the last 4
+      }
+      vocabList[currentVocabIndex].quizResults = quizResults;
+  
+      chrome.storage.local.set({ vocabList: vocabList }, function() {
+        console.log(`Updated quiz results for "${vocabList[currentVocabIndex].word}": ${quizResults}`);
+      });
     }
   }
   

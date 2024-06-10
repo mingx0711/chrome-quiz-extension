@@ -10,7 +10,7 @@ document.getElementById('addVocabForm').addEventListener('submit', function(e) {
     console.log(data.vocabList)
 
     // Append the new word, definition, snoozed field, and seen field
-    vocabList.push({ word, definition, snoozed: false, seen: 0, quizResult:[] });
+    vocabList.push({ word, definition, snoozed: false, seen: 0, quizResult:['n','n','n','n'] });
 
     // Save updated vocab list to Chrome storage
     chrome.storage.local.set({ vocabList: vocabList }, function() {
@@ -43,20 +43,22 @@ function updateVocabList(vocabList) {
       //vocabDiv .textContent = `${entry.word}: ${entry.definition} (Seen: ${entry.seen}, Snoozed: ${entry.snoozed})`;
  
       const wordDiv = document.createElement('div');
-      wordDiv.textContent = `Word: ${entry.word}`;
+      wordDiv.textContent = ` ${entry.word}`;
       wordDiv.style.width = '250px';
+      wordDiv.style.fontSize = '160%';
       wordDiv.style.marginRight  = '10px';
 
  
       const definitionDiv = document.createElement('div');
-      definitionDiv.textContent = `Definition: ${entry.definition}`;
+      definitionDiv.textContent = `${entry.definition}`;
       definitionDiv.style.width = '250px';
+      definitionDiv.style.fontSize = '160%';
       definitionDiv.style.marginRight  = '10px';
 
   
       const quizResultsDiv = document.createElement('div');
       quizResultsDiv.className = 'quiz-results';
-      quizResultsDiv.textContent = 'Quiz Results: ';
+      quizResultsDiv.textContent = '';
       const results = entry.quizResults || [];
       
       for (let i = 0; i < 4; i++) {
@@ -71,6 +73,7 @@ function updateVocabList(vocabList) {
       quizResultsDiv.style.width = '200px';
 
       const deleteButton = document.createElement('button');
+      deleteButton.classList.add("ui","button");
       deleteButton.textContent = 'Delete';
       deleteButton.addEventListener('click', function() {
         vocabList.splice(index, 1);  // Remove the entry from the list
@@ -80,6 +83,7 @@ function updateVocabList(vocabList) {
       });
 
       const snoozeButton = document.createElement('button');
+      snoozeButton.classList.add("ui","button");
       snoozeButton.style.width = '100px'
       snoozeButton.textContent = entry.snoozed ? 'Unsnooze' : 'Snooze';
       snoozeButton.addEventListener('click', function() {

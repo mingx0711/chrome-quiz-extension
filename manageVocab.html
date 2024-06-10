@@ -9,22 +9,27 @@
     .flashcard button { margin-left: 10px; }
     #clearButton { margin-top: 20px; }
   </style>
+  <link rel="stylesheet" href="../libs/semantic.css">
 </head>
 <body>
-  <h1>Manage Vocabulary List</h1>
-  <button id="startTestButton"> Test your weak vocabs! </button>
-  <form id="addVocabForm">
-    <input type="text" id="word" placeholder="Word" required />
-    <input type="text" id="definition" placeholder="Definition" required />
-    <button type="submit">Add</button>
+  <h1 class = "ui message">Manage Vocabulary List</h1>
+  <button class="ui button" id="startTestButton"> Test your weak vocabs! </button>
+  <form  class = "ui center aligned basic segment" id="addVocabForm">
+    <div class="ui input"> 
+      <input type="text" id="word" placeholder="Word" required />
+    </div>
+    <div class="ui input">
+      <input class="ui input" type="text" id="definition" placeholder="Definition" required />
+    </div>
+    <button class="ui button" type="submit">Add</button>
   </form>
   <div class="container" style =" display: flex;">
-    <div  class="box" style = "width: 420px" text-align = "left"> Word </div>
-    <div  class="box" style = "width: 420px"  text-align = "left"> Definition </div>
-    <div  class="box"  style = "width: 100px" text-align = "left"> Last 4 quiz results </div>
+    <div  class="ui box" style = "margin-left:10px; width: 410px; font-size: 150%;" text-align = "left" > <b>Word</b> </div>
+    <div  class="ui box" style = "width: 420px; font-size: 150%;"  text-align = "left"> <b>Definition</b> </div>
+    <div  class="ui box"  style = "width: 300px; font-size: 150%;" text-align = "left"><b>Last 4 quiz results</b></div>
   </div>
   <div id="vocabList"></div>
-  <button id="clearButton">Clear Data</button>
+  <button class="ui button" id="clearButton">Clear Data</button>
 
   <script src="../libs/papaparse.js"></script>
   <script src="manageVocab.js"></script>

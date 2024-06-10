@@ -43,19 +43,29 @@ let currentQuizWord = null;
 let currentQuizDefinition = null;
 let quizType = null;
 let isPairCorrect = null;
+let newtab = true;
 
 function showNextItem() {
-  const eligibleForQuiz = vocabList.some(entry => entry.seen > 3);
-  const shouldShowQuiz = (Math.random() < 0.8) && eligibleForQuiz;
-
-  if (shouldShowQuiz) {
-    showQuiz();
-  } else {
+  if (newtab){
+    //to avoid err
+    newtab = false;
     showNextVocab();
+  }else{
+    const eligibleForQuiz = vocabList.length>=4 && vocabList.some(entry => entry.seen > 3);
+    const shouldShowQuiz = (Math.random() < 0.2) && eligibleForQuiz;
+  
+    if (shouldShowQuiz) {
+      showQuiz();
+    } else {
+      showNextVocab();
+    }
   }
 }
 
 function showNextVocab() {
+  
+  document.getElementById('quizContainer').style.display = 'none';
+  document.getElementById('trueFalseContainer').style.display = 'none';
   
   document.getElementById('snoozeButton').style.display = '';
   document.getElementById('nextButton').style.display = '';
@@ -73,12 +83,17 @@ function showNextVocab() {
     vocabFlashcard.textContent = "No new vocabulary to display.";
     currentVocabIndex = null;
   } else {
-    currentVocabIndex = nextIndex;
+    currentVocabIndex = Math.floor(Math.random()*vocabList.length);
     const vocabFlashcard = document.getElementById('vocabFlashcard');
+
+    let wordDiv = document.getElementById('wordDiv');
+
+    let defDiv = document.getElementById('defDiv');
+
     const word = vocabList[currentVocabIndex].word;
     const definition = vocabList[currentVocabIndex].definition;
-
-    vocabFlashcard.textContent = `${word}: ${definition}`;
+    wordDiv.textContent = word;
+    defDiv.textContent =definition;
 
     // Increment the seen count
     vocabList[currentVocabIndex].seen += 1;
@@ -89,6 +104,7 @@ function showNextVocab() {
     // Show vocab card and hide quiz
     document.getElementById('quizContainer').style.display = 'none';
     vocabFlashcard.style.display = 'block';
+    
   }
 }
 
@@ -120,12 +136,12 @@ function showQuiz() {
   }
 }
 function updateQuizResults(result) {
-  if (currentVocabIndex !== null) {
-    console.log(vocabList);
-    let quizResults = []||vocabList[currentVocabIndex].quizResults.push(result);
-    quizResults.push(result);
+
+  if (currentVocabIndex !== null && vocabList[currentVocabIndex].quizResults) {
+    let quizResults =  vocabList[currentVocabIndex].quizResults;
+    quizResults.unshift(result);
     if (quizResults.length > 4) {
-      quizResults.shift(); // Remove the oldest result to keep only the last 4
+      quizResults.pop(); // Remove the oldest result to keep only the first 4
     }
     vocabList[currentVocabIndex].quizResults = quizResults;
 
@@ -283,6 +299,9 @@ function checkAnswer(button) {
 }
 
 function showCorrectAnswer() {
+  
+  document.getElementById('snoozeButton').style.display = 'none';
+  document.getElementById('nextButton').style.display = 'none';
   const vocabFlashcard = document.getElementById('correctDefinition');
   vocabFlashcard.style.display = 'block';
   const correctVocab = vocabList.find(entry => entry.word === currentQuizWord);
